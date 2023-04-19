@@ -13,7 +13,7 @@ Public Class frmMain
         Dim strWords As String
         Dim strPassword As String
         Dim intSpaceIndex As Integer
-
+        Dim theIndex As Integer
         strWords = txtWords.Text.Trim
         If strWords <> String.Empty Then
 
@@ -27,6 +27,30 @@ Public Class frmMain
                 strPassword = strPassword & strWords(intSpaceIndex + 1)
                 ' Search for the next space.
                 intSpaceIndex = strWords.IndexOf(" ", intSpaceIndex + 1)
+                theIndex = 0
+                If strPassword(0) Like "[A-Z]" Then
+                    For intIndex As Integer = 0 To strPassword.Length - 1
+                        If intIndex Mod 2 = 0 Then
+                            strPassword = strPassword.Insert(intIndex, strPassword(intIndex).ToString.ToLower())
+                            strPassword = strPassword.Remove(intIndex + 1, 1)
+                        Else
+                            strPassword = strPassword.Insert(intIndex, strPassword(intIndex).ToString.ToUpper())
+                            strPassword = strPassword.Remove(intIndex + 1, 1)
+                        End If
+                    Next
+                Else
+                    If strPassword(0) Like "[a-z]" Then
+                        For intIndex As Integer = 0 To strPassword.Length - 1
+                            If intIndex Mod 2 = 0 Then
+                                strPassword = strPassword.Insert(intIndex, strPassword(intIndex).ToString.ToLower())
+                                strPassword = strPassword.Remove(intIndex + 1, 1)
+                            Else
+                                strPassword = strPassword.Insert(intIndex, strPassword(intIndex).ToString.ToUpper())
+                                strPassword = strPassword.Remove(intIndex + 1, 1)
+                            End If
+                        Next
+                    End If
+                End If
             Loop
 
             ' Insert the number after the first character. 
